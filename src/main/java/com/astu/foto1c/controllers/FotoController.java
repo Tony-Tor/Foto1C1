@@ -32,11 +32,6 @@ public class FotoController {
         return Base64.getDecoder().decode(service.getFrame());
     }
 
-    /*@GetMapping("/photo")
-    public void getPhoto(){
-
-    }*/
-
     @GetMapping("/cameraId/{id}")
     public void setCamera(@PathVariable("id") Integer id){
         service.setCamera(id);
