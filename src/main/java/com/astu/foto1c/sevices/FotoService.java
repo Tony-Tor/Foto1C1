@@ -9,6 +9,7 @@ import org.bytedeco.opencv.global.opencv_videoio;
 import org.bytedeco.opencv.opencv_core.*;
 //import org.bytedeco.opencv.opencv_core.MatOfRect;
 import org.bytedeco.opencv.opencv_objdetect.CascadeClassifier;
+import org.bytedeco.opencv.opencv_videoio.CvCapture;
 import org.opencv.core.MatOfRect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +33,13 @@ public class FotoService {
 
     private static Logger logger = LoggerFactory.getLogger(FotoService.class.getName());
 
-    public static FrameGrabber grabber = new MyOpenCVFrameGrabber(0, opencv_videoio.CAP_DSHOW);
+    public static FrameGrabber grabber = new MyOpenCVFrameGrabber(1);
+
     static {
+        logger.info("start grabber");
         try {
-            grabber.setImageWidth(1920);
-            grabber.setImageHeight(1080);
+            grabber.setImageWidth(320);
+            grabber.setImageHeight(240);
             grabber.start();
         } catch (FrameGrabber.Exception e) {
             e.printStackTrace();
@@ -69,7 +72,7 @@ public class FotoService {
             Mat loadedImage = converterToMat.convert(grabber.grabFrame());
 
 
-            RectVector facesDetected = new RectVector();
+            /*RectVector facesDetected = new RectVector();
 
             CascadeClassifier cascadeClassifier = new CascadeClassifier();
             int minFaceSize = Math.round(loadedImage.rows() * 0.1f);
@@ -95,16 +98,16 @@ public class FotoService {
                 y = face.y() + face.height()/2;
                 w = (int)(face.width() * 1.7f);
                 h = w * 9/7;
-            }
+            }*/
 
             BufferedImage bufferedImage = java2dFrameConverter.getBufferedImage(converterToMat.convert(loadedImage));
 
-            try {
+            /*try {
                 bufferedImage = bufferedImage.getSubimage(x-w/2, y-h/2, w, h);
                 //bufferedImage = bufferedImage.getSubimage(x, y, w, h);
             } catch (RasterFormatException e){
 
-            }
+            }*/
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage,"jpeg",baos);

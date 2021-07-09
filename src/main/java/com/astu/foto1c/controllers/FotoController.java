@@ -5,10 +5,11 @@ import com.astu.foto1c.sevices.FotoService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Base64;
 
 @RestController
-@RequestMapping(value = "/v1/public/foto", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/public/photo", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FotoController {
 
     private final FotoService service;
@@ -18,13 +19,13 @@ public class FotoController {
     }
 
     @GetMapping("/hello")
-    public Image getHello(){
-        return new Image("Hello");
+    public String getHello(){
+        return LocalDateTime.now().toString();
     }
 
     @GetMapping("/frame")
-    public Image getFrame(){
-         return new Image(service.getFrame());
+    public String getFrame(){
+         return service.getFrame();
     }
 
     @GetMapping(value = "/frame2", produces = MediaType.IMAGE_PNG_VALUE)
